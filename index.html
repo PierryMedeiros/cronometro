@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cronometro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <img src="./imgs/cronometro.png" alt="cronômetro" id="cronometroIcon">
+        <div id="containerC">
+            <div id="hours"></div>
+            <div id="minutes"></div>
+            <div id="seconds"></div>
+        </div>
+        <div id="containerB">
+            <button id="bt1">Reset</button>
+            <button id="bt2">Start/Stop</button>
+        </div>
+        <footer>
+            <a href="#">Made By Pierry </a>
+        </footer>
+    </main>
+    <script>
+        //Variaveis
+        var condicao = false;
+        var hour = 0;
+        var min = 0;
+        var sec = 0;
+        var interval;
+        var hora = document.getElementById("hours")
+        var minuto = document.getElementById("minutes")
+        var segundo = document.getElementById("seconds")
+
+        
+
+        //Eventos dos botôes
+        document.getElementById("bt2").addEventListener("click", start)
+        document.getElementById("bt1").addEventListener("click", inicia)
+
+        //Inicia os valores e Reseta o cronômetro
+        function inicia(){
+            hour= 0
+            min = 0
+            sec = 0
+            if(condicao==true){
+                condicao=false
+                clearInterval(interval)
+            }
+            hora.innerHTML="0" + hour
+            minuto.innerHTML= "0" + min
+            segundo.innerHTML= "0" + sec
+        }
+        
+        //Inicia o cronômetro
+        function start(){
+            if(condicao==false){
+                condicao=true;
+                interval = setInterval(main, 1000);
+            } else if(condicao==true){
+                condicao = false;
+                clearInterval(interval)
+            }
+        }
+
+        
+        function main(){
+            sec++
+
+            //verifica se segundo, minuto ou hora são menores que de, se forem menores, acrescenta um 0 antes.
+            if(hour < 10){
+                hora.innerHTML= "0" + hour
+            }else{
+                hora.innerHTML=hour
+            }
+            
+            if(min < 10){
+                minuto.innerHTML="0" + min
+            }else{
+                minuto.innerHTML=min
+            }
+            
+            if(sec < 10){
+                segundo.innerHTML="0" + sec
+            }else{
+                segundo.innerHTML=sec
+            }
+
+
+            //acrescenta um a "min" e "hour" sempre que o segundo  ou minuto chegar a 60
+            if(min==59 && sec>=59){
+                hour++
+                min= 0
+                sec= -1
+            }else if(sec>=59){
+                min++
+                sec= -1
+            }
+        }
+        window.addEventListener("load", inicia)
+        </script>
+</body>
+</html>
